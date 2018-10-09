@@ -27,7 +27,7 @@
 	<key>createdby</key>
 	<string>SpringHack</string>
 	<key>description</key>
-	<string>Open current folder in iTerm</string>
+	<string>Quick open iTerm and cd into current dir</string>
 	<key>disabled</key>
 	<false/>
 	<key>name</key>
@@ -38,7 +38,49 @@
 			<key>config</key>
 			<dict>
 				<key>applescript</key>
-				<string>on alfred_script(q)		set finderPath to ""		tell application "Finder"		try			set finderFolder to (folder of the front window as alias)		on error			set finderFolder to (path to home folder as alias)		end try		set finderPath to quoted form of POSIX path of finderFolder	end tell		tell application "iTerm"		if it is not running then			launch		else			if (count of current window) = 0 then				create window with default profile			else				tell current window to create tab with default profile			end if					end if		set entered to false		repeat while not entered			try				tell current tab of current window					select					tell the current session						write text "cd " &amp; finderPath					end tell					set entered to true				end tell			on error err				set entered to false			end try		end repeat		activate		display notification "Entered: " &amp; finderPath with title "Terminal here" sound name "Frog"	end tell	end alfred_script</string>
+				<string>on alfred_script(q)
+	
+	set finderPath to ""
+	
+	tell application "Finder"
+		try
+			set finderFolder to (folder of the front window as alias)
+		on error
+			set finderFolder to (path to home folder as alias)
+		end try
+		set finderPath to quoted form of POSIX path of finderFolder
+	end tell
+	
+	tell application "iTerm"
+		if it is not running then
+			launch
+		else
+			if (count of current window) = 0 then
+				create window with default profile
+			else
+				tell current window to create tab with default profile
+			end if
+			
+		end if
+		set entered to false
+		repeat while not entered
+			try
+				tell current tab of current window
+					select
+					tell the current session
+						write text "cd " &amp; finderPath
+					end tell
+					set entered to true
+				end tell
+			on error err
+				set entered to false
+			end try
+		end repeat
+		activate
+		display notification "Entered: " &amp; finderPath with title "Terminal here" sound name "Frog"
+	end tell
+	
+end alfred_script</string>
 				<key>cachescript</key>
 				<false/>
 			</dict>
@@ -47,7 +89,7 @@
 			<key>uid</key>
 			<string>7686C74A-A33F-49C2-8231-40F1569A481A</string>
 			<key>version</key>
-			<integer>11</integer>
+			<integer>1</integer>
 		</dict>
 		<dict>
 			<key>config</key>
@@ -57,9 +99,9 @@
 				<key>keyword</key>
 				<string>.</string>
 				<key>subtext</key>
-				<string>Open current folder in iTerm 2</string>
+				<string>No arguments needed ...</string>
 				<key>text</key>
-				<string>iTerm Here</string>
+				<string>Open iTerm and cd into current dir</string>
 				<key>withspace</key>
 				<false/>
 			</dict>
@@ -72,22 +114,22 @@
 		</dict>
 	</array>
 	<key>readme</key>
-	<string>Quick open iTerm and cd into current dir</string>
+	<string></string>
 	<key>uidata</key>
 	<dict>
 		<key>264A09D9-DE34-403A-9524-C67F6525811D</key>
 		<dict>
 			<key>xpos</key>
-			<integer>300</integer>
+			<integer>50</integer>
 			<key>ypos</key>
-			<real>60</real>
+			<integer>50</integer>
 		</dict>
 		<key>7686C74A-A33F-49C2-8231-40F1569A481A</key>
 		<dict>
 			<key>xpos</key>
-			<integer>500</integer>
+			<integer>270</integer>
 			<key>ypos</key>
-			<real>60</real>
+			<integer>50</integer>
 		</dict>
 	</dict>
 	<key>webaddress</key>
